@@ -54,15 +54,15 @@ export function ContattiSection() {
   ]
 
   return (
-    <section id="contatti" className="py-24 px-4 bg-[#fafafa]" ref={ref}>
+    <section id="contatti" className="py-24 px-4 bg-background" ref={ref}>
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
         >
-          <span className="text-brand-primary font-semibold tracking-wide uppercase text-sm">Contatti</span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-4 tracking-tight">Parliamone</h2>
+          <span className="text-brand-secondary font-semibold tracking-wide uppercase text-sm">Contatti</span>
+          <h2 className="font-condensed text-5xl md:text-6xl lg:text-7xl font-bold mt-4 uppercase leading-none">Parliamone</h2>
           <p className="text-muted-foreground mt-4 max-w-xl mx-auto">
             Hai un progetto in mente? Contattami per una consulenza gratuita.
           </p>
@@ -76,7 +76,7 @@ export function ContattiSection() {
             transition={{ delay: 0.2 }}
           >
             {isSubmitted ? (
-              <div className="bg-white rounded-2xl p-8 shadow-lg text-center space-y-4">
+              <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-2xl p-8 shadow-lg text-center space-y-4">
                 <div className="w-16 h-16 bg-brand-secondary rounded-full flex items-center justify-center mx-auto">
                   <Send className="w-8 h-8 text-brand-primary" />
                 </div>
@@ -84,7 +84,7 @@ export function ContattiSection() {
                 <p className="text-muted-foreground">Ti ricontatterò il prima possibile.</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-8 shadow-lg space-y-6">
+              <form onSubmit={handleSubmit} className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-2xl p-8 shadow-lg space-y-6">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="contact-name">Nome</Label>
@@ -134,7 +134,7 @@ export function ContattiSection() {
               <p className="text-white/80 mb-6">
                 Preferisci parlare a voce? Prenota una call gratuita di 30 minuti per discutere del tuo progetto.
               </p>
-              <Button variant="secondary" className="bg-white text-brand-primary hover:bg-brand-secondary">
+              <Button variant="secondary" className="bg-brand-secondary text-brand-primary hover:bg-brand-secondary/80">
                 Prenota su Calendly
               </Button>
             </div>
@@ -146,7 +146,7 @@ export function ContattiSection() {
                   href={contact.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow group"
+                  className="flex items-center gap-4 p-4 bg-white/20 backdrop-blur-sm border border-white/30 rounded-xl shadow-sm hover:shadow-md transition-shadow group"
                 >
                   <div className="w-12 h-12 rounded-full bg-brand-primary/10 flex items-center justify-center group-hover:bg-brand-primary transition-colors">
                     <contact.icon className="w-5 h-5 text-brand-primary group-hover:text-white transition-colors" />
@@ -171,7 +171,7 @@ export function ContattiSection() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 0.5 }}
-          className="mt-24 pt-8 border-t border-gray-200 text-center"
+          className="mt-24 pt-8 border-t border-border text-center"
         >
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} Emanuele Renna. Tutti i diritti riservati.

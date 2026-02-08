@@ -4,50 +4,52 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Custom palette for Emanuele Renna */
-  --brand-primary: #2b33de;
-  --brand-secondary: #cefdb2;
-  --brand-primary-rgb: 43, 51, 222;
-  --brand-secondary-rgb: 206, 253, 178;
+  /* Custom palette for Emanuele Renna - Light Theme */
+  --brand-primary: #BBE053;
+  --brand-secondary: #DEEAFC;
+  --brand-primary-rgb: 187, 224, 83;
+  --brand-secondary-rgb: 222, 234, 252;
 
-  --background: #fafafa;
-  --foreground: #1a1a1a;
-  --card: #ffffff;
-  --card-foreground: #1a1a1a;
-  --popover: #ffffff;
-  --popover-foreground: #1a1a1a;
-  --primary: #2b33de;
-  --primary-foreground: #ffffff;
-  --secondary: #cefdb2;
-  --secondary-foreground: #1a1a1a;
-  --muted: #f5f5f5;
-  --muted-foreground: #737373;
-  --accent: #cefdb2;
-  --accent-foreground: #1a1a1a;
+  /* Green Background Theme */
+  --background: #BBE053;
+  --foreground: #0a0a0a;
+  --card: rgba(255, 255, 255, 0.15);
+  --card-foreground: #0a0a0a;
+  --popover: #BBE053;
+  --popover-foreground: #0a0a0a;
+  --primary: #DEEAFC;
+  --primary-foreground: #0a0a0a;
+  --secondary: #DEEAFC;
+  --secondary-foreground: #0a0a0a;
+  --muted: rgba(255, 255, 255, 0.2);
+  --muted-foreground: #0a0a0a;
+  --accent: #DEEAFC;
+  --accent-foreground: #0a0a0a;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: #e5e5e5;
-  --input: #e5e5e5;
-  --ring: #2b33de;
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  --border: rgba(0, 0, 0, 0.1);
+  --input: rgba(255, 255, 255, 0.3);
+  --ring: #DEEAFC;
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: rgba(255, 255, 255, 0.1);
+  --sidebar-foreground: #0a0a0a;
+  --sidebar-primary: #DEEAFC;
+  --sidebar-primary-foreground: #0a0a0a;
+  --sidebar-accent: rgba(255, 255, 255, 0.2);
+  --sidebar-accent-foreground: #0a0a0a;
+  --sidebar-border: rgba(0, 0, 0, 0.1);
+  --sidebar-ring: #DEEAFC;
 }
 
 @theme inline {
-  --font-sans: "Inter", "Inter Fallback", system-ui, sans-serif;
-  --font-mono: "Geist Mono", "Geist Mono Fallback";
+  --font-sans: var(--font-inter), "Inter", "Inter Fallback", system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), "Geist Mono", "Geist Mono Fallback";
+  --font-condensed: var(--font-barlow-condensed), "Barlow Condensed", sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

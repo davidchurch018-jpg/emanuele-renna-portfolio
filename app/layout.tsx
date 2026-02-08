@@ -1,11 +1,16 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { Inter, Geist_Mono } from "next/font/google"
+import { Inter, Geist_Mono, Barlow_Condensed } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
-const inter = Inter({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
+const barlowCondensed = Barlow_Condensed({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-barlow-condensed",
+})
+const _geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" })
 
 export const metadata: Metadata = {
   title: "Emanuele Renna | Marketing, Eventi & Social Media",
@@ -32,7 +37,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#2B33DE",
+  themeColor: "#BBE053",
   width: "device-width",
   initialScale: 1,
 }
@@ -44,7 +49,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="it">
-      <body className={`font-sans antialiased`}>
+      <body className={`${inter.variable} ${barlowCondensed.variable} font-sans antialiased`}>
         {children}
         <Analytics />
       </body>

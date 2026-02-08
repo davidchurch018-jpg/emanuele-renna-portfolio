@@ -50,9 +50,9 @@ export function PowerToggle({ size = "md", showLabel = true, showHint = true }: 
             animate={{ 
               opacity: [0.3, 0.6, 0.3],
               boxShadow: [
-                "0 0 20px rgba(43, 51, 222, 0.3), 0 0 40px rgba(43, 51, 222, 0.1)",
-                "0 0 30px rgba(43, 51, 222, 0.5), 0 0 60px rgba(43, 51, 222, 0.2)",
-                "0 0 20px rgba(43, 51, 222, 0.3), 0 0 40px rgba(43, 51, 222, 0.1)"
+                "0 0 20px rgba(187, 224, 83, 0.3), 0 0 40px rgba(187, 224, 83, 0.1)",
+                "0 0 30px rgba(187, 224, 83, 0.5), 0 0 60px rgba(187, 224, 83, 0.2)",
+                "0 0 20px rgba(187, 224, 83, 0.3), 0 0 40px rgba(187, 224, 83, 0.1)"
               ]
             }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -63,7 +63,7 @@ export function PowerToggle({ size = "md", showLabel = true, showHint = true }: 
         {!isOn && (
           <>
             <motion.div
-              className="absolute -inset-4 rounded-full border-2 border-[#2b33de]/20"
+              className="absolute -inset-4 rounded-full border-2 border-brand-primary/20"
               animate={{
                 scale: [1, 1.1, 1],
                 opacity: [0.4, 0, 0.4],
@@ -71,7 +71,7 @@ export function PowerToggle({ size = "md", showLabel = true, showHint = true }: 
               transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
             />
             <motion.div
-              className="absolute -inset-2 rounded-full border border-[#2b33de]/10"
+              className="absolute -inset-2 rounded-full border border-brand-primary/10"
               animate={{
                 scale: [1, 1.06, 1],
                 opacity: [0.3, 0, 0.3],
@@ -84,10 +84,10 @@ export function PowerToggle({ size = "md", showLabel = true, showHint = true }: 
         <button
           onClick={toggle}
           className={cn(
-            "relative rounded-full transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2b33de] focus-visible:ring-offset-2",
+            "relative rounded-full transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2",
             sizeClasses[size],
             isOn
-              ? "bg-gradient-to-r from-[#2b33de] to-[#4a50f0] shadow-[0_0_30px_rgba(43,51,222,0.5)]"
+              ? "bg-gradient-to-r from-[#BBE053] to-[#a8d040] shadow-[0_0_30px_rgba(187,224,83,0.5)]"
               : "bg-gradient-to-r from-gray-200 to-gray-100 border border-gray-300 shadow-inner",
           )}
           aria-label={isOn ? "Spegni il sito" : "Accendi il sito"}
@@ -132,7 +132,7 @@ export function PowerToggle({ size = "md", showLabel = true, showHint = true }: 
               }}
             >
               {isOn ? (
-                <Zap className={cn(iconSizes[size], "text-[#2b33de] fill-[#cefdb2]")} />
+                <Zap className={cn(iconSizes[size], "text-[#0a0a0a] fill-[#DEEAFC]")} />
               ) : (
                 <Power className={cn(iconSizes[size], "text-gray-400")} />
               )}
@@ -147,9 +147,9 @@ export function PowerToggle({ size = "md", showLabel = true, showHint = true }: 
               animate={{ 
                 opacity: 1,
                 background: [
-                  "radial-gradient(circle at 70% 50%, rgba(206, 253, 178, 0.3) 0%, transparent 50%)",
-                  "radial-gradient(circle at 75% 50%, rgba(206, 253, 178, 0.4) 0%, transparent 60%)",
-                  "radial-gradient(circle at 70% 50%, rgba(206, 253, 178, 0.3) 0%, transparent 50%)"
+                  "radial-gradient(circle at 70% 50%, rgba(222, 234, 252, 0.4) 0%, transparent 50%)",
+                  "radial-gradient(circle at 75% 50%, rgba(222, 234, 252, 0.5) 0%, transparent 60%)",
+                  "radial-gradient(circle at 70% 50%, rgba(222, 234, 252, 0.4) 0%, transparent 50%)"
                 ]
               }}
               transition={{ duration: 2, repeat: Infinity }}
@@ -166,7 +166,7 @@ export function PowerToggle({ size = "md", showLabel = true, showHint = true }: 
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <span className="text-sm font-semibold tracking-wide text-[#2b33de]">
+          <span className="text-sm font-semibold tracking-wide text-brand-primary">
             ✨ Sito acceso
           </span>
         </motion.div>

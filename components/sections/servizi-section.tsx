@@ -13,8 +13,8 @@ const servizi = [
     description: "Analisi, posizionamento e pianificazione per raggiungere i tuoi obiettivi di business.",
     benefits: ["Analisi competitor", "Posizionamento brand", "Piano d'azione concreto"],
     target: "Per chi vuole crescere con metodo",
-    accent: "from-[#2b33de] to-[#4a50f0]",
-    accentLight: "bg-[#2b33de]/5",
+    accent: "from-[#DEEAFC] to-[#c8dcf5]",
+    accentLight: "bg-[#DEEAFC]/20",
   },
   {
     icon: Calendar,
@@ -22,8 +22,8 @@ const servizi = [
     description: "Dall'ideazione alla produzione, dalla ricerca sponsor alla gestione completa dell'evento.",
     benefits: ["Concept creativo", "Gestione sponsor", "Coordinamento completo"],
     target: "Per brand che vogliono esperienze memorabili",
-    accent: "from-[#cefdb2] to-[#a8e063]",
-    accentLight: "bg-[#cefdb2]/20",
+    accent: "from-[#DEEAFC] to-[#c8dcf5]",
+    accentLight: "bg-[#DEEAFC]/20",
   },
   {
     icon: Share2,
@@ -31,8 +31,8 @@ const servizi = [
     description: "Piano editoriale, creazione contenuti e gestione community per una presenza autentica.",
     benefits: ["Piano editoriale", "Content creation", "Community management"],
     target: "Per chi vuole costruire una community",
-    accent: "from-[#2b33de] to-[#4a50f0]",
-    accentLight: "bg-[#2b33de]/5",
+    accent: "from-[#DEEAFC] to-[#c8dcf5]",
+    accentLight: "bg-[#DEEAFC]/20",
   },
   {
     icon: Palette,
@@ -40,8 +40,8 @@ const servizi = [
     description: "Identità visiva e percorsi di conversione ottimizzati per trasformare visitatori in clienti.",
     benefits: ["Visual identity", "Landing page", "Funnel ottimizzati"],
     target: "Per chi parte da zero o vuole evolvere",
-    accent: "from-[#cefdb2] to-[#a8e063]",
-    accentLight: "bg-[#cefdb2]/20",
+    accent: "from-[#DEEAFC] to-[#c8dcf5]",
+    accentLight: "bg-[#DEEAFC]/20",
   },
 ]
 
@@ -64,8 +64,8 @@ function ServiceCard({ servizio, index, isInView }: ServiceCardProps) {
       className="group relative"
     >
       <div className={cn(
-        "relative h-full rounded-3xl border border-gray-100 bg-white p-8 transition-all duration-500",
-        "hover:shadow-2xl hover:shadow-[#2b33de]/10 hover:border-[#2b33de]/20",
+        "relative h-full rounded-3xl border border-white/30 bg-white/20 backdrop-blur-sm p-8 transition-all duration-500",
+        "hover:shadow-2xl hover:shadow-brand-primary/20 hover:border-brand-primary/30",
         "overflow-hidden"
       )}>
         {/* Hover background glow */}
@@ -105,8 +105,8 @@ function ServiceCard({ servizio, index, isInView }: ServiceCardProps) {
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: 0.4 + index * 0.12 + i * 0.05 }}
               >
-                <div className="w-5 h-5 rounded-full bg-brand-secondary/30 flex items-center justify-center flex-shrink-0">
-                  <Check className="w-3 h-3 text-brand-primary" />
+                <div className="w-5 h-5 rounded-full bg-brand-primary/20 flex items-center justify-center flex-shrink-0">
+                  <Check className="w-3 h-3 text-brand-secondary" />
                 </div>
                 <span className="text-foreground font-medium">{benefit}</span>
               </motion.li>
@@ -114,13 +114,13 @@ function ServiceCard({ servizio, index, isInView }: ServiceCardProps) {
           </ul>
 
           {/* Target audience */}
-          <div className="pt-4 border-t border-gray-100">
+          <div className="pt-4 border-t border-border">
             <p className="text-sm text-muted-foreground italic">{servizio.target}</p>
           </div>
 
           {/* Hover CTA */}
           <motion.div
-            className="flex items-center gap-2 text-brand-primary font-semibold"
+            className="flex items-center gap-2 text-brand-secondary font-semibold"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 10 }}
             transition={{ duration: 0.3 }}
@@ -132,8 +132,8 @@ function ServiceCard({ servizio, index, isInView }: ServiceCardProps) {
 
         {/* Corner decoration */}
         <motion.div
-          className="absolute -bottom-10 -right-10 w-32 h-32 rounded-full opacity-10"
-          style={{ background: `linear-gradient(135deg, ${servizio.accent.includes('cefdb2') ? '#cefdb2' : '#2b33de'} 0%, transparent 70%)` }}
+          className="absolute -bottom-10 -right-10 w-32 h-32 rounded-full opacity-20"
+          style={{ background: `linear-gradient(135deg, #DEEAFC 0%, transparent 70%)` }}
           animate={{ scale: isHovered ? 1.5 : 1 }}
           transition={{ duration: 0.5 }}
         />
@@ -154,7 +154,7 @@ export function ServiziSection() {
   const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -100])
 
   return (
-    <section id="servizi" className="py-24 md:py-32 px-4 bg-[#fafafa] relative overflow-hidden" ref={sectionRef}>
+    <section id="servizi" className="py-24 md:py-32 px-4 bg-background relative overflow-hidden" ref={sectionRef}>
       {/* Decorative background elements */}
       <motion.div
         className="absolute top-0 left-0 w-full h-full pointer-events-none"

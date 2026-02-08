@@ -33,12 +33,12 @@ export function ChiSonoSection() {
   const decorY = useTransform(scrollYProgress, [0, 1], [0, -80])
 
   return (
-    <section id="chi-sono" className="py-24 md:py-32 px-4 bg-white relative overflow-hidden" ref={sectionRef}>
+    <section id="chi-sono" className="py-24 md:py-32 px-4 bg-background relative overflow-hidden" ref={sectionRef}>
       {/* Subtle background pattern */}
       <div 
-        className="absolute inset-0 opacity-[0.02]"
+        className="absolute inset-0 opacity-[0.03]"
         style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(43, 51, 222, 1) 1px, transparent 0)`,
+          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.5) 1px, transparent 0)`,
           backgroundSize: "40px 40px"
         }}
       />
@@ -55,11 +55,11 @@ export function ChiSonoSection() {
           >
             {/* Main Image Container */}
             <motion.div 
-              className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-gray-100"
+              className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-muted"
               style={{ y: imageY }}
             >
               <Image 
-                src="/professional-italian-man-portrait-business-casual.jpg" 
+                src="/images/180852123_2251823108285101_2908344964305872064_n.jpg" 
                 alt="Emanuele Renna - Consulente Marketing" 
                 fill 
                 className="object-cover"
@@ -67,11 +67,11 @@ export function ChiSonoSection() {
               />
               
               {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#2b33de]/30 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-primary/30 via-transparent to-transparent" />
               
               {/* Corner accent */}
               <div className="absolute top-0 right-0 w-24 h-24">
-                <div className="absolute top-4 right-4 w-full h-full border-t-2 border-r-2 border-[#cefdb2] rounded-tr-3xl" />
+                <div className="absolute top-4 right-4 w-full h-full border-t-2 border-r-2 border-brand-secondary rounded-tr-3xl" />
               </div>
             </motion.div>
 
@@ -91,7 +91,7 @@ export function ChiSonoSection() {
 
             {/* Stats floating card */}
             <motion.div
-              className="absolute -right-4 bottom-20 bg-white rounded-2xl shadow-xl p-4 border border-gray-100"
+              className="absolute -right-4 bottom-20 bg-card rounded-2xl shadow-xl p-4 border border-border"
               initial={{ opacity: 0, x: 30, scale: 0.9 }}
               animate={imageInView ? { opacity: 1, x: 0, scale: 1 } : {}}
               transition={{ delay: 0.4, duration: 0.6 }}
@@ -107,7 +107,7 @@ export function ChiSonoSection() {
                     >
                       {stat.value}
                     </motion.span>
-                    <span className="text-xs text-gray-500 whitespace-nowrap">{stat.label}</span>
+                    <span className="text-xs text-muted-foreground whitespace-nowrap">{stat.label}</span>
                   </div>
                 ))}
               </div>

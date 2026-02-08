@@ -37,7 +37,7 @@ export function PreventivoBlock() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="space-y-6"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+          <h2 className="font-condensed text-5xl md:text-6xl lg:text-7xl font-bold text-white uppercase leading-none">
             Parliamo del tuo progetto
           </h2>
 
@@ -49,7 +49,7 @@ export function PreventivoBlock() {
             <DialogTrigger asChild>
               <Button
                 size="lg"
-                className="bg-white text-brand-primary hover:bg-brand-secondary hover:text-foreground px-10 py-7 text-lg rounded-full shadow-xl hover:shadow-2xl transition-all duration-300"
+                className="bg-[#DEEAFC] text-foreground hover:bg-[#cddff5] px-10 py-7 text-lg rounded-full shadow-xl hover:shadow-2xl transition-all duration-300"
               >
                 Richiedi preventivo
                 <ArrowRight className="ml-2 w-5 h-5" />

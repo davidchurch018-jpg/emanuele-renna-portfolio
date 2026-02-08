@@ -150,8 +150,8 @@ export function PortfolioSection() {
         <div className="max-w-7xl mx-auto relative z-10">
           {/* Header with scroll animation */}
           <motion.div className="text-center mb-12" style={{ y: headerY, opacity: headerOpacity }}>
-            <span className="text-brand-primary font-semibold tracking-wide uppercase text-sm">Portfolio</span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-4 tracking-tight">Progetti selezionati</h2>
+            <span className="text-brand-secondary font-semibold tracking-wide uppercase text-sm">Portfolio</span>
+            <h2 className="font-condensed text-5xl md:text-6xl lg:text-7xl font-bold mt-4 uppercase leading-none">Progetti selezionati</h2>
           </motion.div>
 
           {/* Filters with entrance animation */}
@@ -166,8 +166,8 @@ export function PortfolioSection() {
                 className={cn(
                   "px-5 py-2 rounded-full text-sm font-medium transition-all duration-300",
                   activeCategory === cat.value
-                    ? "bg-brand-primary text-white"
-                    : "bg-gray-100 text-gray-600 hover:bg-gray-200",
+                    ? "bg-[#DEEAFC] text-foreground shadow-lg"
+                    : "bg-white/20 text-foreground border border-white/30 hover:bg-white/30",
                 )}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -251,7 +251,7 @@ export function PortfolioSection() {
                       {selectedItem.caseStudy.assets.map((asset) => (
                         <span
                           key={asset}
-                          className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium"
+                          className="bg-muted text-muted-foreground px-3 py-1 rounded-full text-xs font-medium"
                         >
                           {asset}
                         </span>
@@ -299,7 +299,7 @@ function PortfolioCard({
     >
       <motion.div
         className={cn(
-          "relative overflow-hidden rounded-2xl bg-gray-100",
+          "relative overflow-hidden rounded-2xl bg-muted",
           item.featured ? "aspect-[4/5]" : "aspect-[4/3]",
         )}
         whileHover={{ scale: 1.02, y: -5 }}

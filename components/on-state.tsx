@@ -9,6 +9,7 @@ import { PortfolioSection } from "./sections/portfolio-section"
 import { TestimonianzeSection } from "./sections/testimonianze-section"
 import { ContattiSection } from "./sections/contatti-section"
 import { FloatingNav } from "./floating-nav"
+import { BackToTopButton } from "./back-to-top-button"
 
 // Staggered section animation
 const sectionVariants = {
@@ -26,19 +27,19 @@ const sectionVariants = {
 export function OnState() {
   return (
     <motion.div
-      className="min-h-screen bg-[#fafafa] relative"
-      initial={{ opacity: 0, filter: "blur(20px)" }}
-      animate={{ opacity: 1, filter: "blur(0px)" }}
-      exit={{ opacity: 0, filter: "blur(10px)" }}
+      className="min-h-screen bg-background relative"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
     >
-      {/* Blue grid pattern - global */}
+      {/* Azzurro grid pattern - global */}
       <div 
         className="fixed inset-0 pointer-events-none z-0 opacity-[0.06]"
         style={{
           backgroundImage: `
-            linear-gradient(rgba(43, 51, 222, 1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(43, 51, 222, 1) 1px, transparent 1px)
+            linear-gradient(rgba(222, 234, 252, 0.8) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(222, 234, 252, 0.8) 1px, transparent 1px)
           `,
           backgroundSize: "80px 80px"
         }}
@@ -48,7 +49,7 @@ export function OnState() {
       <motion.div
         className="fixed inset-0 pointer-events-none z-50"
         initial={{ 
-          background: "radial-gradient(circle at center, rgba(206, 253, 178, 0.8) 0%, transparent 50%)",
+          background: "radial-gradient(circle at center, rgba(222, 234, 252, 0.7) 0%, transparent 50%)",
           opacity: 1 
         }}
         animate={{ opacity: 0 }}
@@ -59,7 +60,7 @@ export function OnState() {
       <motion.div
         className="fixed top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[600px] pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse at center top, rgba(43, 51, 222, 0.05) 0%, transparent 60%)"
+          background: "radial-gradient(ellipse at center top, rgba(222, 234, 252, 0.35) 0%, transparent 60%)"
         }}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -67,6 +68,7 @@ export function OnState() {
       />
 
       <FloatingNav />
+      <BackToTopButton />
       
       <motion.div
         initial="hidden"

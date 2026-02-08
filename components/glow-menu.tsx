@@ -49,8 +49,8 @@ export function GlowMenu({ disabled = false }: GlowMenuProps) {
       className={cn(
         "inline-flex items-center gap-1 px-3 py-2.5 rounded-full border transition-all duration-500",
         isOn
-          ? "bg-white/90 backdrop-blur-xl border-gray-200/80 shadow-lg shadow-black/5"
-          : "bg-white/40 backdrop-blur-sm border-gray-200/30",
+          ? "bg-white/30 backdrop-blur-xl border-white/40 shadow-lg shadow-black/5"
+          : "bg-white/20 backdrop-blur-sm border-white/20",
       )}
       aria-label="Menu principale"
     >
@@ -64,13 +64,13 @@ export function GlowMenu({ disabled = false }: GlowMenuProps) {
           className={cn(
             "relative flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300",
             disabled || !isOn 
-              ? "cursor-not-allowed text-gray-400" 
+              ? "cursor-not-allowed text-foreground/40" 
               : "cursor-pointer",
             hoveredItem === item.id && isOn 
-              ? "text-[#2b33de]" 
+              ? "text-foreground" 
               : isOn 
-                ? "text-gray-700 hover:text-gray-900" 
-                : "text-gray-400",
+                ? "text-foreground/70 hover:text-foreground" 
+                : "text-foreground/40",
           )}
           aria-disabled={disabled || !isOn}
         >
@@ -81,7 +81,7 @@ export function GlowMenu({ disabled = false }: GlowMenuProps) {
                 layoutId="menu-glow"
                 className="absolute inset-0 rounded-full"
                 style={{
-                  background: "linear-gradient(135deg, rgba(206, 253, 178, 0.4) 0%, rgba(206, 253, 178, 0.2) 100%)"
+                  background: "linear-gradient(135deg, rgba(222, 234, 252, 0.6) 0%, rgba(222, 234, 252, 0.4) 100%)"
                 }}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -96,7 +96,7 @@ export function GlowMenu({ disabled = false }: GlowMenuProps) {
             className="relative z-10 hidden sm:inline-flex"
             animate={{ 
               scale: hoveredItem === item.id && isOn ? 1.1 : 1,
-              color: hoveredItem === item.id && isOn ? "#2b33de" : undefined
+              color: hoveredItem === item.id && isOn ? "#0a0a0a" : undefined
             }}
             transition={{ type: "spring", stiffness: 400 }}
           >
@@ -109,7 +109,7 @@ export function GlowMenu({ disabled = false }: GlowMenuProps) {
           {/* Active indicator dot */}
           {hoveredItem === item.id && isOn && (
             <motion.div
-              className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#2b33de] rounded-full"
+              className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-brand-primary rounded-full"
               layoutId="active-dot"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
@@ -125,9 +125,9 @@ export function GlowMenu({ disabled = false }: GlowMenuProps) {
           className="absolute inset-0 rounded-full pointer-events-none"
           animate={{ 
             boxShadow: [
-              "inset 0 0 0 1px rgba(43, 51, 222, 0.05)",
-              "inset 0 0 0 1px rgba(43, 51, 222, 0.1)",
-              "inset 0 0 0 1px rgba(43, 51, 222, 0.05)"
+              "inset 0 0 0 1px rgba(187, 224, 83, 0.05)",
+              "inset 0 0 0 1px rgba(187, 224, 83, 0.1)",
+              "inset 0 0 0 1px rgba(187, 224, 83, 0.05)"
             ]
           }}
           transition={{ duration: 2, repeat: Infinity }}
