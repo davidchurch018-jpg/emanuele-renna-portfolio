@@ -1,8 +1,8 @@
 "use client"
 
-import { Suspense, useRef, useEffect, useState, useCallback, useMemo } from "react"
+import { Suspense, useRef, useEffect, useState, useMemo } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
-import { useGLTF, Environment, ContactShadows } from "@react-three/drei"
+import { useGLTF, Environment } from "@react-three/drei"
 import * as THREE from "three"
 
 // ============================================================
@@ -12,20 +12,29 @@ const CONFIG = {
   model: {
     path: "/models/head.glb",
     scale: 7.5,           // Scala del modello - aumenta/diminuisci se troppo piccolo/grande
-    positionY: 0.3,       // Offset verticale
+    positionY: -0.10,     // Offset verticale per centrare il volto nel cerchio
   },
   rotation: {
-    maxYaw: 25,           // Rotazione massima orizzontale in gradi
-    maxPitch: 15,         // Rotazione massima verticale in gradi
-    dampingFactor: 0.06,  // Smoothing (più basso = più smooth, ma anche più lento)
-    returnSpeed: 0.015,   // Velocità ritorno a posizione neutra (più lento = più fluido)
+    maxYaw: 25,
+    maxPitch: 15,
+    dampingFactor: 0.06,
+    returnSpeed: 0.015,
+    // Fixed 3/4 view rotation (in degrees)
+    fixedYaw: 20,
+    fixedPitch: -5,
   },
   breathing: {
     enabled: true,
-    yAmplitude: 0.015,    // Ampiezza movimento Y (ridotto per subtilità)
-    rotAmplitude: 0.008,  // Ampiezza rotazione (ridotto per subtilità)
-    speed: 0.6,           // Velocità breathing (più lento = più naturale)
-    fadeSpeed: 0.03,      // Velocità fade in/out del breathing
+    yAmplitude: 0.012,    // Ampiezza movimento Y (molto subtile)
+    rotAmplitude: 0.006,  // Ampiezza rotazione (molto subtile)
+    speed: 0.5,           // Velocità breathing (lento = naturale)
+  },
+  // Micro-oscillazione autonoma attorno alla posa 3/4
+  idle: {
+    yawAmplitude: 0.035,  // Oscillazione orizzontale (radianti) ~2°
+    pitchAmplitude: 0.02, // Oscillazione verticale (radianti) ~1°
+    yawSpeed: 0.3,        // Velocità oscillazione yaw
+    pitchSpeed: 0.2,      // Velocità oscillazione pitch (diversa per naturalezza)
   },
   camera: {
     fov: 45,
@@ -37,14 +46,11 @@ const CONFIG = {
 // TIPI
 // ============================================================
 interface HeadModelProps {
-  targetRotation: React.MutableRefObject<{ x: number; y: number }>
   prefersReducedMotion: boolean
-  isIdle: boolean
 }
 
 interface Head3DProps {
   className?: string
-  containerRef?: React.RefObject<HTMLElement | null>
 }
 
 // ============================================================
@@ -61,70 +67,69 @@ function LoadingSkeleton() {
 // ============================================================
 // HEAD MODEL COMPONENT (inside Canvas)
 // ============================================================
-function HeadModel({ targetRotation, prefersReducedMotion, isIdle }: HeadModelProps) {
+function HeadModel({ prefersReducedMotion }: HeadModelProps) {
   const { scene } = useGLTF(CONFIG.model.path)
   const groupRef = useRef<THREE.Group>(null)
   const currentRotation = useRef({ x: 0, y: 0 })
-  const breathingOffset = useRef(0)
-  const breathingIntensity = useRef(0) // Per fade smooth del breathing
+  const timeRef = useRef(0)
 
-  // Memoizza il clone della scena per evitare ricalcoli ad ogni render
-  const clonedScene = useMemo(() => scene.clone(), [scene])
+  // Memoizza il clone della scena e riduci lucidità materiali
+  const clonedScene = useMemo(() => {
+    const clone = scene.clone()
+    clone.traverse((child) => {
+      if ((child as THREE.Mesh).isMesh) {
+        const mesh = child as THREE.Mesh
+        if (mesh.material && (mesh.material as THREE.MeshStandardMaterial).isMeshStandardMaterial) {
+          const mat = (mesh.material as THREE.MeshStandardMaterial).clone()
+          mat.roughness = Math.max(mat.roughness, 0.7)
+          mat.metalness = Math.min(mat.metalness, 0.05)
+          mat.envMapIntensity = 0.3
+          mesh.material = mat
+        }
+      }
+    })
+    return clone
+  }, [scene])
 
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (!groupRef.current) return
 
-    const { dampingFactor, returnSpeed } = CONFIG.rotation
-    const { enabled, yAmplitude, rotAmplitude, speed, fadeSpeed } = CONFIG.breathing
+    const { enabled, yAmplitude, rotAmplitude, speed } = CONFIG.breathing
+    const { yawAmplitude, pitchAmplitude, yawSpeed, pitchSpeed } = CONFIG.idle
 
     // Se reduced motion, mantieni posizione statica
     if (prefersReducedMotion) {
-      groupRef.current.rotation.x = 0
-      groupRef.current.rotation.y = 0
+      groupRef.current.rotation.x = THREE.MathUtils.degToRad(CONFIG.rotation.fixedPitch)
+      groupRef.current.rotation.y = THREE.MathUtils.degToRad(CONFIG.rotation.fixedYaw)
       groupRef.current.position.y = CONFIG.model.positionY
       return
     }
 
-    // Target rotation (da mouse/touch/orientation)
-    let targetX = targetRotation.current.x
-    let targetY = targetRotation.current.y
+    timeRef.current += delta
 
-    // Se idle, ritorna lentamente verso centro
-    if (isIdle) {
-      targetX = THREE.MathUtils.lerp(targetX, 0, returnSpeed)
-      targetY = THREE.MathUtils.lerp(targetY, 0, returnSpeed)
-      targetRotation.current.x = targetX
-      targetRotation.current.y = targetY
-      // Fade in del breathing
-      breathingIntensity.current = THREE.MathUtils.lerp(breathingIntensity.current, 1, fadeSpeed)
-    } else {
-      // Fade out del breathing (smooth transition)
-      breathingIntensity.current = THREE.MathUtils.lerp(breathingIntensity.current, 0, fadeSpeed)
-    }
+    // Posa base 3/4
+    const baseYaw = THREE.MathUtils.degToRad(CONFIG.rotation.fixedYaw)
+    const basePitch = THREE.MathUtils.degToRad(CONFIG.rotation.fixedPitch)
 
-    // Lerp verso il target (smoothing) - usa delta per frame-rate independence
-    const smoothFactor = 1 - Math.pow(1 - dampingFactor, delta * 60)
-    currentRotation.current.x = THREE.MathUtils.lerp(
-      currentRotation.current.x,
-      targetX,
-      smoothFactor
-    )
-    currentRotation.current.y = THREE.MathUtils.lerp(
-      currentRotation.current.y,
-      targetY,
-      smoothFactor
-    )
+    // Micro-oscillazione autonoma (sin con velocità diverse per look organico)
+    const idleYaw = Math.sin(timeRef.current * yawSpeed) * yawAmplitude
+    const idlePitch = Math.sin(timeRef.current * pitchSpeed + 1.5) * pitchAmplitude
 
-    // Applica rotazione
+    const targetY = baseYaw + idleYaw
+    const targetX = basePitch + idlePitch
+
+    // Smooth lerp
+    const smoothFactor = 1 - Math.pow(1 - CONFIG.rotation.dampingFactor, delta * 60)
+    currentRotation.current.x = THREE.MathUtils.lerp(currentRotation.current.x, targetX, smoothFactor)
+    currentRotation.current.y = THREE.MathUtils.lerp(currentRotation.current.y, targetY, smoothFactor)
+
     groupRef.current.rotation.x = currentRotation.current.x
     groupRef.current.rotation.y = currentRotation.current.y
 
-    // Breathing animation con fade smooth
+    // Breathing animation
     if (enabled) {
-      breathingOffset.current += delta * speed
-      const intensity = breathingIntensity.current
-      const breathY = Math.sin(breathingOffset.current) * yAmplitude * intensity
-      const breathRot = Math.sin(breathingOffset.current * 0.7) * rotAmplitude * intensity
+      const breathY = Math.sin(timeRef.current * speed) * yAmplitude
+      const breathRot = Math.sin(timeRef.current * speed * 0.7) * rotAmplitude
 
       groupRef.current.position.y = CONFIG.model.positionY + breathY
       groupRef.current.rotation.z = breathRot
@@ -147,25 +152,21 @@ function HeadModel({ targetRotation, prefersReducedMotion, isIdle }: HeadModelPr
 function SceneSetup() {
   return (
     <>
-      {/* Illuminazione ottimizzata: solo 2 luci */}
-      <ambientLight intensity={0.4} />
+      {/* Illuminazione morbida, no riflessi glossy */}
+      <ambientLight intensity={0.7} />
       <directionalLight
         position={[5, 5, 5]}
-        intensity={1.2}
+        intensity={0.6}
+        castShadow={false}
+      />
+      <directionalLight
+        position={[-3, 2, 4]}
+        intensity={0.3}
         castShadow={false}
       />
       
-      {/* Environment per riflessi naturali */}
-      <Environment preset="city" />
-      
-      {/* Ombra di contatto sottile */}
-      <ContactShadows
-        position={[0, -1.5, 0]}
-        opacity={0.4}
-        scale={10}
-        blur={2}
-        far={4}
-      />
+      {/* Environment soft per fill-light diffusa */}
+      <Environment preset="apartment" />
     </>
   )
 }
@@ -173,20 +174,11 @@ function SceneSetup() {
 // ============================================================
 // MAIN HEAD3D COMPONENT
 // ============================================================
-export function Head3D({ className = "", containerRef }: Head3DProps) {
+export function Head3D({ className = "" }: Head3DProps) {
   const localContainerRef = useRef<HTMLDivElement>(null)
   
-  const targetRotation = useRef({ x: 0, y: 0 })
-  const [isIdle, setIsIdle] = useState(true)
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
-  
-  const idleTimeoutRef = useRef<NodeJS.Timeout | null>(null)
-
-  // Helper per ottenere il container effettivo
-  const getContainer = useCallback(() => {
-    return containerRef?.current || localContainerRef.current
-  }, [containerRef])
 
   // --------------------------------------------------------
   // REDUCED MOTION CHECK
@@ -201,121 +193,7 @@ export function Head3D({ className = "", containerRef }: Head3DProps) {
     return () => mql.removeEventListener("change", handler)
   }, [])
 
-  // --------------------------------------------------------
-  // CONVERT MOUSE/TOUCH TO ROTATION
-  // --------------------------------------------------------
-  const handlePointerInput = useCallback((clientX: number, clientY: number) => {
-    const container = getContainer()
-    if (prefersReducedMotion || !container) return
 
-    const rect = container.getBoundingClientRect()
-    
-    // Normalizza coordinate [-1, 1] rispetto al container
-    const normalizedX = ((clientX - rect.left) / rect.width) * 2 - 1
-    const normalizedY = ((clientY - rect.top) / rect.height) * 2 - 1
-
-    // Converti in radianti con limiti
-    const maxYawRad = THREE.MathUtils.degToRad(CONFIG.rotation.maxYaw)
-    const maxPitchRad = THREE.MathUtils.degToRad(CONFIG.rotation.maxPitch)
-
-    targetRotation.current.y = normalizedX * maxYawRad
-    targetRotation.current.x = -normalizedY * maxPitchRad // Inverted per movimento naturale
-
-    // Reset idle
-    setIsIdle(false)
-    
-    if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current)
-    idleTimeoutRef.current = setTimeout(() => setIsIdle(true), 2000)
-  }, [prefersReducedMotion, getContainer])
-
-  // --------------------------------------------------------
-  // POINTER EVENTS (mouse + touch)
-  // --------------------------------------------------------
-  useEffect(() => {
-    if (prefersReducedMotion) return
-    const container = getContainer()
-    if (!container) return
-
-    const handlePointerMove = (e: PointerEvent) => {
-      handlePointerInput(e.clientX, e.clientY)
-    }
-
-    container.addEventListener("pointermove", handlePointerMove, { passive: true })
-    
-    return () => {
-      container.removeEventListener("pointermove", handlePointerMove)
-      if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current)
-    }
-  }, [handlePointerInput, prefersReducedMotion, getContainer])
-
-  // --------------------------------------------------------
-  // DEVICE ORIENTATION (mobile fallback)
-  // --------------------------------------------------------
-  useEffect(() => {
-    if (prefersReducedMotion) return
-    if (typeof window === "undefined") return
-    
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-    if (!isMobile) return
-
-    const handleOrientation = (e: DeviceOrientationEvent) => {
-      if (e.gamma === null || e.beta === null) return
-      
-      // gamma: -90 to 90 (tilt left/right)
-      // beta: -180 to 180 (tilt forward/back)
-      const maxYawRad = THREE.MathUtils.degToRad(CONFIG.rotation.maxYaw)
-      const maxPitchRad = THREE.MathUtils.degToRad(CONFIG.rotation.maxPitch)
-
-      // Normalizza e limita
-      const normalizedX = THREE.MathUtils.clamp(e.gamma / 45, -1, 1)
-      const normalizedY = THREE.MathUtils.clamp((e.beta - 45) / 45, -1, 1)
-
-      targetRotation.current.y = normalizedX * maxYawRad
-      targetRotation.current.x = normalizedY * maxPitchRad
-
-      setIsIdle(false)
-      
-      if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current)
-      idleTimeoutRef.current = setTimeout(() => setIsIdle(true), 2000)
-    }
-
-    // Request permission on iOS 13+
-    const requestPermission = async () => {
-      if (
-        typeof DeviceOrientationEvent !== "undefined" &&
-        // @ts-expect-error - iOS specific
-        typeof DeviceOrientationEvent.requestPermission === "function"
-      ) {
-        try {
-          // @ts-expect-error - iOS specific
-          const permission = await DeviceOrientationEvent.requestPermission()
-          if (permission === "granted") {
-            window.addEventListener("deviceorientation", handleOrientation, { passive: true })
-          }
-        } catch (err) {
-          console.warn("Device orientation permission denied:", err)
-        }
-      } else {
-        // Non-iOS or older browsers
-        window.addEventListener("deviceorientation", handleOrientation, { passive: true })
-      }
-    }
-
-    // Auto-request or wait for user interaction
-    const container = getContainer()
-    if (container) {
-      const handleFirstTouch = () => {
-        requestPermission()
-        container.removeEventListener("touchstart", handleFirstTouch)
-      }
-      container.addEventListener("touchstart", handleFirstTouch, { once: true, passive: true })
-    }
-
-    return () => {
-      window.removeEventListener("deviceorientation", handleOrientation)
-      if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current)
-    }
-  }, [prefersReducedMotion, getContainer])
 
   // --------------------------------------------------------
   // RENDER
@@ -340,7 +218,7 @@ export function Head3D({ className = "", containerRef }: Head3DProps) {
         gl={{
           antialias: true,
           toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: 1.2,
+        toneMappingExposure: 1.0,
           alpha: true,
         }}
         style={{ 
@@ -354,9 +232,7 @@ export function Head3D({ className = "", containerRef }: Head3DProps) {
         <Suspense fallback={null}>
           <SceneSetup />
           <HeadModel
-            targetRotation={targetRotation}
             prefersReducedMotion={prefersReducedMotion}
-            isIdle={isIdle}
           />
         </Suspense>
       </Canvas>

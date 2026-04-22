@@ -13,8 +13,8 @@ const servizi = [
     description: "Analisi, posizionamento e pianificazione per raggiungere i tuoi obiettivi di business.",
     benefits: ["Analisi competitor", "Posizionamento brand", "Piano d'azione concreto"],
     target: "Per chi vuole crescere con metodo",
-    accent: "from-[#DEEAFC] to-[#c8dcf5]",
-    accentLight: "bg-[#DEEAFC]/20",
+    accent: "from-[#8BCB00] to-[#6FAE00]",
+    accentLight: "bg-[#8BCB00]/20",
   },
   {
     icon: Calendar,
@@ -22,8 +22,8 @@ const servizi = [
     description: "Dall'ideazione alla produzione, dalla ricerca sponsor alla gestione completa dell'evento.",
     benefits: ["Concept creativo", "Gestione sponsor", "Coordinamento completo"],
     target: "Per brand che vogliono esperienze memorabili",
-    accent: "from-[#DEEAFC] to-[#c8dcf5]",
-    accentLight: "bg-[#DEEAFC]/20",
+    accent: "from-[#8BCB00] to-[#6FAE00]",
+    accentLight: "bg-[#8BCB00]/20",
   },
   {
     icon: Share2,
@@ -31,8 +31,8 @@ const servizi = [
     description: "Piano editoriale, creazione contenuti e gestione community per una presenza autentica.",
     benefits: ["Piano editoriale", "Content creation", "Community management"],
     target: "Per chi vuole costruire una community",
-    accent: "from-[#DEEAFC] to-[#c8dcf5]",
-    accentLight: "bg-[#DEEAFC]/20",
+    accent: "from-[#8BCB00] to-[#6FAE00]",
+    accentLight: "bg-[#8BCB00]/20",
   },
   {
     icon: Palette,
@@ -40,8 +40,8 @@ const servizi = [
     description: "Identità visiva e percorsi di conversione ottimizzati per trasformare visitatori in clienti.",
     benefits: ["Visual identity", "Landing page", "Funnel ottimizzati"],
     target: "Per chi parte da zero o vuole evolvere",
-    accent: "from-[#DEEAFC] to-[#c8dcf5]",
-    accentLight: "bg-[#DEEAFC]/20",
+    accent: "from-[#8BCB00] to-[#6FAE00]",
+    accentLight: "bg-[#8BCB00]/20",
   },
 ]
 
@@ -106,7 +106,7 @@ function ServiceCard({ servizio, index, isInView }: ServiceCardProps) {
                 transition={{ delay: 0.4 + index * 0.12 + i * 0.05 }}
               >
                 <div className="w-5 h-5 rounded-full bg-brand-primary/20 flex items-center justify-center flex-shrink-0">
-                  <Check className="w-3 h-3 text-brand-secondary" />
+                  <Check className="w-3 h-3 text-brand-primary" />
                 </div>
                 <span className="text-foreground font-medium">{benefit}</span>
               </motion.li>
@@ -133,7 +133,7 @@ function ServiceCard({ servizio, index, isInView }: ServiceCardProps) {
         {/* Corner decoration */}
         <motion.div
           className="absolute -bottom-10 -right-10 w-32 h-32 rounded-full opacity-20"
-          style={{ background: `linear-gradient(135deg, #DEEAFC 0%, transparent 70%)` }}
+          style={{ background: `linear-gradient(135deg, #E8EAED 0%, transparent 70%)` }}
           animate={{ scale: isHovered ? 1.5 : 1 }}
           transition={{ duration: 0.5 }}
         />

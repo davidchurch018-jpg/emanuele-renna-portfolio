@@ -5,45 +5,45 @@
 
 :root {
   /* Custom palette for Emanuele Renna - Light Theme */
-  --brand-primary: #BBE053;
-  --brand-secondary: #DEEAFC;
-  --brand-primary-rgb: 187, 224, 83;
-  --brand-secondary-rgb: 222, 234, 252;
+  --brand-primary: #8BCB00;
+  --brand-secondary: #E8EAED;
+  --brand-primary-rgb: 139, 203, 0;
+  --brand-secondary-rgb: 232, 234, 237;
 
-  /* Green Background Theme */
-  --background: #BBE053;
-  --foreground: #0a0a0a;
-  --card: rgba(255, 255, 255, 0.15);
-  --card-foreground: #0a0a0a;
-  --popover: #BBE053;
-  --popover-foreground: #0a0a0a;
-  --primary: #DEEAFC;
-  --primary-foreground: #0a0a0a;
-  --secondary: #DEEAFC;
-  --secondary-foreground: #0a0a0a;
-  --muted: rgba(255, 255, 255, 0.2);
-  --muted-foreground: #0a0a0a;
-  --accent: #DEEAFC;
-  --accent-foreground: #0a0a0a;
+  /* Subtle Cream Background with Green Accents */
+  --background: #F9FAF5;
+  --foreground: #1a1a1a;
+  --card: rgba(139, 203, 0, 0.06);
+  --card-foreground: #1a1a1a;
+  --popover: #F9FAF5;
+  --popover-foreground: #1a1a1a;
+  --primary: #8BCB00;
+  --primary-foreground: #1a1a1a;
+  --secondary: #f4f4f5;
+  --secondary-foreground: #1a1a1a;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --accent: #8BCB00;
+  --accent-foreground: #1a1a1a;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: rgba(0, 0, 0, 0.1);
-  --input: rgba(255, 255, 255, 0.3);
-  --ring: #DEEAFC;
+  --border: rgba(0, 0, 0, 0.08);
+  --input: rgba(0, 0, 0, 0.06);
+  --ring: #8BCB00;
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
   --radius: 0.625rem;
-  --sidebar: rgba(255, 255, 255, 0.1);
-  --sidebar-foreground: #0a0a0a;
-  --sidebar-primary: #DEEAFC;
-  --sidebar-primary-foreground: #0a0a0a;
-  --sidebar-accent: rgba(255, 255, 255, 0.2);
-  --sidebar-accent-foreground: #0a0a0a;
-  --sidebar-border: rgba(0, 0, 0, 0.1);
-  --sidebar-ring: #DEEAFC;
+  --sidebar: #F3F5EE;
+  --sidebar-foreground: #1a1a1a;
+  --sidebar-primary: #8BCB00;
+  --sidebar-primary-foreground: #1a1a1a;
+  --sidebar-accent: #f4f4f5;
+  --sidebar-accent-foreground: #1a1a1a;
+  --sidebar-border: rgba(0, 0, 0, 0.08);
+  --sidebar-ring: #8BCB00;
 }
 
 @theme inline {
@@ -161,9 +161,38 @@
     }
   }
 
+  /* Message vaporize / disrupted dissolve effect */
+  .msg-vaporize {
+    animation: msgVaporize 0.65s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    pointer-events: none;
+  }
+
+  @keyframes msgVaporize {
+    0% {
+      opacity: 1;
+      filter: blur(0px);
+      transform: translateY(0) scaleX(1) scaleY(1);
+    }
+    25% {
+      opacity: 0.55;
+      filter: blur(3px);
+      transform: translateY(-4px) scaleX(1.03) scaleY(0.97);
+    }
+    60% {
+      opacity: 0.15;
+      filter: blur(8px);
+      transform: translateY(-10px) scaleX(1.1) scaleY(0.92);
+    }
+    100% {
+      opacity: 0;
+      filter: blur(16px);
+      transform: translateY(-18px) scaleX(1.2) scaleY(0.82);
+    }
+  }
+
   /* Text gradient animation */
   .gradient-text {
-    background: linear-gradient(135deg, var(--brand-primary) 0%, #5a60f5 50%, var(--brand-primary) 100%);
+    background: linear-gradient(135deg, var(--brand-primary) 0%, #8a8f96 50%, var(--brand-primary) 100%);
     background-size: 200% auto;
     -webkit-background-clip: text;
     background-clip: text;

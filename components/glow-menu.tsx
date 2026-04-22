@@ -81,7 +81,7 @@ export function GlowMenu({ disabled = false }: GlowMenuProps) {
                 layoutId="menu-glow"
                 className="absolute inset-0 rounded-full"
                 style={{
-                  background: "linear-gradient(135deg, rgba(222, 234, 252, 0.6) 0%, rgba(222, 234, 252, 0.4) 100%)"
+                  background: "linear-gradient(135deg, rgba(232, 234, 237, 0.6) 0%, rgba(232, 234, 237, 0.4) 100%)"
                 }}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -125,9 +125,9 @@ export function GlowMenu({ disabled = false }: GlowMenuProps) {
           className="absolute inset-0 rounded-full pointer-events-none"
           animate={{ 
             boxShadow: [
-              "inset 0 0 0 1px rgba(187, 224, 83, 0.05)",
-              "inset 0 0 0 1px rgba(187, 224, 83, 0.1)",
-              "inset 0 0 0 1px rgba(187, 224, 83, 0.05)"
+              "inset 0 0 0 1px rgba(168, 255, 0, 0.05)",
+              "inset 0 0 0 1px rgba(168, 255, 0, 0.1)",
+              "inset 0 0 0 1px rgba(168, 255, 0, 0.05)"
             ]
           }}
           transition={{ duration: 2, repeat: Infinity }}

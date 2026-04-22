@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from "react"
 import { motion } from "framer-motion"
 import { HeroSection } from "./sections/hero-section"
 import { ChiSonoSection } from "./sections/chi-sono-section"
@@ -25,6 +26,10 @@ const sectionVariants = {
 }
 
 export function OnState() {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
     <motion.div
       className="min-h-screen bg-background relative"
@@ -33,13 +38,13 @@ export function OnState() {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
     >
-      {/* Azzurro grid pattern - global */}
+      {/* Green grid pattern - global */}
       <div 
-        className="fixed inset-0 pointer-events-none z-0 opacity-[0.06]"
+        className="fixed inset-0 pointer-events-none z-0 opacity-[0.04]"
         style={{
           backgroundImage: `
-            linear-gradient(rgba(222, 234, 252, 0.8) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(222, 234, 252, 0.8) 1px, transparent 1px)
+            linear-gradient(rgba(168, 255, 0, 0.8) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(168, 255, 0, 0.8) 1px, transparent 1px)
           `,
           backgroundSize: "80px 80px"
         }}
@@ -49,7 +54,7 @@ export function OnState() {
       <motion.div
         className="fixed inset-0 pointer-events-none z-50"
         initial={{ 
-          background: "radial-gradient(circle at center, rgba(222, 234, 252, 0.7) 0%, transparent 50%)",
+          background: "radial-gradient(circle at center, rgba(168, 255, 0, 0.15) 0%, transparent 50%)",
           opacity: 1 
         }}
         animate={{ opacity: 0 }}
@@ -60,14 +65,14 @@ export function OnState() {
       <motion.div
         className="fixed top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[600px] pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse at center top, rgba(222, 234, 252, 0.35) 0%, transparent 60%)"
+          background: "radial-gradient(ellipse at center top, rgba(168, 255, 0, 0.08) 0%, transparent 60%)"
         }}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1, delay: 0.3 }}
       />
 
-      <FloatingNav />
+      {/* <FloatingNav /> */}
       <BackToTopButton />
       
       <motion.div

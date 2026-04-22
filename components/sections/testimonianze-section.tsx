@@ -117,7 +117,7 @@ export function TestimonianzeSection() {
               hoverSpeed={20}
               scaleOnHover
               fadeOut
-              fadeOutColor="#BBE053"
+              fadeOutColor="#A8FF00"
               ariaLabel="Clienti e partner"
             />
           </div>

@@ -166,7 +166,7 @@ export function PortfolioSection() {
                 className={cn(
                   "px-5 py-2 rounded-full text-sm font-medium transition-all duration-300",
                   activeCategory === cat.value
-                    ? "bg-[#DEEAFC] text-foreground shadow-lg"
+                    ? "bg-[#E8EAED] text-foreground shadow-lg"
                     : "bg-white/20 text-foreground border border-white/30 hover:bg-white/30",
                 )}
                 whileHover={{ scale: 1.05 }}

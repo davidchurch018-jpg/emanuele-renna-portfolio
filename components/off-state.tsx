@@ -57,7 +57,7 @@ export function OffState() {
         <motion.div 
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full"
           style={{
-            background: "radial-gradient(circle, rgba(187, 224, 83, 0.08) 0%, transparent 60%)"
+            background: "radial-gradient(circle, rgba(168, 255, 0, 0.08) 0%, transparent 60%)"
           }}
           animate={{
             scale: [1, 1.1, 1],
@@ -70,7 +70,7 @@ export function OffState() {
         <motion.div 
           className="absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full"
           style={{
-            background: "radial-gradient(circle, rgba(222, 234, 252, 0.15) 0%, transparent 50%)"
+            background: "radial-gradient(circle, rgba(232, 234, 237, 0.15) 0%, transparent 50%)"
           }}
           animate={{
             scale: [1, 1.2, 1],
@@ -85,8 +85,8 @@ export function OffState() {
           className="absolute inset-0 opacity-[0.08]"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(187, 224, 83, 1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(187, 224, 83, 1) 1px, transparent 1px)
+              linear-gradient(rgba(168, 255, 0, 1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(168, 255, 0, 1) 1px, transparent 1px)
             `,
             backgroundSize: "80px 80px"
           }}
