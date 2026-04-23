@@ -1,7 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { useInView } from "framer-motion"
+import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 import { Quote } from "lucide-react"
 import Image from "next/image"
@@ -117,7 +116,7 @@ export function TestimonianzeSection() {
               hoverSpeed={20}
               scaleOnHover
               fadeOut
-              fadeOutColor="#A8FF00"
+              fadeOutColor="#F9FAF5"
               ariaLabel="Clienti e partner"
             />
           </div>

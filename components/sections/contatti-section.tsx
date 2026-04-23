@@ -3,8 +3,7 @@
 import type React from "react"
 
 import { useState } from "react"
-import { motion } from "framer-motion"
-import { useInView } from "framer-motion"
+import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 import { Mail, Instagram, Linkedin, MessageCircle, Send, MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"

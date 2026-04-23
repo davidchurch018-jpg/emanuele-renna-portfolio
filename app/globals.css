@@ -190,6 +190,19 @@
     }
   }
 
+  /* Hide scrollbar (used in chat components) */
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* 3D perspective for portfolio cards */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
   /* Text gradient animation */
   .gradient-text {
     background: linear-gradient(135deg, var(--brand-primary) 0%, #8a8f96 50%, var(--brand-primary) 100%);

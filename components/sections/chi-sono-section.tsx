@@ -1,7 +1,6 @@
 "use client"
 
-import { motion, useScroll, useTransform } from "framer-motion"
-import { useInView } from "framer-motion"
+import { motion, useScroll, useTransform, useInView } from "framer-motion"
 import { useRef } from "react"
 import Image from "next/image"
 import { ArrowUpRight, Sparkles } from "lucide-react"

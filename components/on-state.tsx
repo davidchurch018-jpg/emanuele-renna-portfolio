@@ -9,7 +9,6 @@ import { PreventivoBlock } from "./sections/preventivo-block"
 import { PortfolioSection } from "./sections/portfolio-section"
 import { TestimonianzeSection } from "./sections/testimonianze-section"
 import { ContattiSection } from "./sections/contatti-section"
-import { FloatingNav } from "./floating-nav"
 import { BackToTopButton } from "./back-to-top-button"
 
 // Staggered section animation

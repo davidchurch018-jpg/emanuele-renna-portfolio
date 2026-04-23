@@ -49,7 +49,7 @@ export function PreventivoBlock() {
             <DialogTrigger asChild>
               <Button
                 size="lg"
-                className="bg-[#E8EAED] text-foreground hover:bg-[#dcdee2] px-10 py-7 text-lg rounded-full shadow-xl hover:shadow-2xl transition-all duration-300"
+                className="bg-brand-secondary text-foreground hover:bg-brand-secondary/80 px-10 py-7 text-lg rounded-full shadow-xl hover:shadow-2xl transition-all duration-300"
               >
                 Richiedi preventivo
                 <ArrowRight className="ml-2 w-5 h-5" />
